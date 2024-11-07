@@ -22,6 +22,10 @@ public class BehaviourEnemy
 
     public void AddTransition(Context.State key, Transition value)
     {
+        if (!_transitions.ContainsKey(key))
+        {
+            _transitions.Add(key, new List<Transition>());
+        }
         _transitions[key].Add(value);
     }
 
@@ -53,10 +57,10 @@ public class BehaviourEnemy
         }
 
 
-        //foreach (var transition in _transitions[enemy.State])
-        //{
-        //    transition.Try(enemy);
-        //}
+        foreach (var transition in _transitions[enemy.State])
+        {
+            transition.Try(enemy);
+        }
         
     }
 

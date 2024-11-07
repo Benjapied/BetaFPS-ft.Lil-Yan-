@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transition : MonoBehaviour
+public class Transition 
 {
     
     Context.State _targetState;
@@ -11,16 +11,11 @@ public class Transition : MonoBehaviour
 
     internal State TargetState { get => _targetState; set => _targetState = value; }
 
-    void Start()
+    public Transition()
     {
         _conditions = new List<Condition>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void AddCondition(Condition condition)
     {

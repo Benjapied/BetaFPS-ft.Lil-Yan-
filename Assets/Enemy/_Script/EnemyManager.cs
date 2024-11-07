@@ -21,6 +21,18 @@ public class EnemyManager : MonoBehaviour
 
 
 
+        
+
+
+
+        Transition idleToMove = new Transition();
+        idleToMove.TargetState = Context.State.Idle;
+        idleToMove.AddCondition(new CheckPlayerNearby());
+
+        
+        _behaviour.AddTransition(Context.State.Idle, idleToMove);
+
+
         //Instantiate(prefabEnemy, transform.position, transform.rotation);
 
         NavMeshAgent agent =  prefabEnemy.GetComponent<NavMeshAgent>();

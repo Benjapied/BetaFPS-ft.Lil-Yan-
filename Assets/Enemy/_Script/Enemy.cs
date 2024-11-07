@@ -36,4 +36,10 @@ public class Enemy : MonoBehaviour
         _state = new_state;
         _behaviour.StartBehaviour(this);
     }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 5.0f);
+    }
 }
