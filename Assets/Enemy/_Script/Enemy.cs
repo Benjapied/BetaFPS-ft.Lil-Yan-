@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     Context.State _state;
     BehaviourEnemy _behaviour;
+    public Transform _transform;
 
     public BehaviourEnemy Behaviour { get => _behaviour; set => _behaviour = value; }
     internal State State { get => _state; set => _state = value; }
