@@ -28,12 +28,15 @@ public class Transition
         int true_tests = 0;
         foreach (var item in _conditions)
         {
-            item.Test(enemy);
-            true_tests++;
+            if (item.Test(enemy))
+            {
+                true_tests++;
+            }
+            
         }
         if (true_tests != 0 && true_tests == _conditions.Count)
         {
-            enemy.State = _targetState;
+            enemy.SetState(_targetState);
         }
     }
 }

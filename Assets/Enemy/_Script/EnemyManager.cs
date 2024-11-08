@@ -16,34 +16,49 @@ public class EnemyManager : MonoBehaviour
     {
         _behaviour = new BehaviourEnemy();
 
-        EnemyIdleState enemyIdleState = new EnemyIdleState();
-        _behaviour.AddState(Context.State.Idle, enemyIdleState);
-
-
-
         
+        _behaviour.AddState(Context.State.Idle, new EnemyIdleState());
+        _behaviour.AddState(Context.State.Move, new EnemyMoveState());
+        _behaviour.AddState(Context.State.Shoot, new EnemyShootState());
 
 
 
+
+
+        // Transition Idle To Move
         Transition idleToMove = new Transition();
-        idleToMove.TargetState = Context.State.Idle;
+        idleToMove.TargetState = Context.State.Move;
         idleToMove.AddCondition(new CheckPlayerNearby());
 
-        
         _behaviour.AddTransition(Context.State.Idle, idleToMove);
+
+        // Transition Move To Shoot
+        Transition moveToShoot = new Transition();
+        moveToShoot.TargetState = Context.State.Shoot;
+        moveToShoot.AddCondition(new CheckShootDistance());
+
+        _behaviour.AddTransition(Context.State.Move, moveToShoot);
+
+
+        // Transition Shoot To Shoot
+        Transition shootToShoot = new Transition();
+        shootToShoot.TargetState = Context.State.Shoot;
+        shootToShoot.AddCondition(new Condition());
+
+        _behaviour.AddTransition(Context.State.Shoot, shootToShoot);
 
 
         //Instantiate(prefabEnemy, transform.position, transform.rotation);
 
         NavMeshAgent agent =  prefabEnemy.GetComponent<NavMeshAgent>();
 
-        if (NavMesh.SamplePosition(prefabEnemy.transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
-        {
-            transform.position = hit.position;
-            agent.Warp(hit.position); // Place l'agent sur le NavMesh
-            Debug.Log(hit.position);
+        //if (NavMesh.SamplePosition(prefabEnemy.transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        //{
+        //    transform.position = hit.position;
+        //    agent.Warp(hit.position); // Place l'agent sur le NavMesh
+        //    Debug.Log(hit.position);
             
-        }
+        //}
 
         //this.gameObject.AddComponent<Enemy>();
 

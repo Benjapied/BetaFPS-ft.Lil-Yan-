@@ -6,8 +6,8 @@ public class CheckPlayerNearby : Condition
 {
     public override bool Test(Enemy enemy)
     {
-        
-        Collider[] hitColliders = Physics.OverlapSphere(enemy.gameObject.transform.position, 5.0f);
+       
+        Collider[] hitColliders = Physics.OverlapSphere(enemy.gameObject.transform.position, enemy.DistanceDetection);
 
         foreach (Collider collider in hitColliders)
         {
@@ -17,12 +17,8 @@ public class CheckPlayerNearby : Condition
                 {
                     return true;
                 }
-                
             }
         }
-
         return false;
     }
-
-    
 }

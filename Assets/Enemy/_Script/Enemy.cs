@@ -9,9 +9,13 @@ public class Enemy : MonoBehaviour
     Context.State _state;
     BehaviourEnemy _behaviour;
     public Transform _transform;
+    private float _distanceDetection = 5f;
+    private float _distanceShoot = 3f;
 
     public BehaviourEnemy Behaviour { get => _behaviour; set => _behaviour = value; }
     internal State State { get => _state; set => _state = value; }
+    public float DistanceDetection { get => _distanceDetection; set => _distanceDetection = value; }
+    public float DistanceShoot { get => _distanceShoot; set => _distanceShoot = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,6 @@ public class Enemy : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 5.0f);
+        Gizmos.DrawWireSphere(transform.position, _distanceDetection);
     }
 }
