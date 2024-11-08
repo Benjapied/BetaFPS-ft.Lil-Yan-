@@ -6,6 +6,11 @@ public class WeaponReloadingState : GeneralState
 {
     public override void EnterState(IBehaviour iBehaviour)
     {
+        if (iBehaviour is Weapon weapon)
+        {
+            weapon.gameObject.GetComponent<AudioSource>().Play();
+            //Debug.Log("on recharche");
+        }
         Debug.Log("on comence a recharger");
     }
     public override void FrameUpdate(IBehaviour iBehaviour)
