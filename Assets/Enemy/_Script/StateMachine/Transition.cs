@@ -9,7 +9,7 @@ public class Transition
     Context.State _targetState;
     List<Condition> _conditions;
 
-    internal State TargetState { get => _targetState; set => _targetState = value; }
+    internal Context.State TargetState { get => _targetState; set => _targetState = value; }
 
     public Transition()
     {

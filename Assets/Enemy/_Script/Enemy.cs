@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     private float _distanceShoot = 3f;
 
     public BehaviourEnemy Behaviour { get => _behaviour; set => _behaviour = value; }
-    internal State State { get => _state; set => _state = value; }
+    internal Context.State State { get => _state; set => _state = value; }
     public float DistanceDetection { get => _distanceDetection; set => _distanceDetection = value; }
     public float DistanceShoot { get => _distanceShoot; set => _distanceShoot = value; }
 
