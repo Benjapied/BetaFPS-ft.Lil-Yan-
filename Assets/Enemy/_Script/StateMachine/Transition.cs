@@ -23,12 +23,12 @@ public class Transition
         
     }
 
-    public void Try(Enemy enemy)
+    public void Try(IBehaviour iBehaviour)
     {
         int true_tests = 0;
         foreach (var item in _conditions)
         {
-            if (item.Test(enemy))
+            if (item.Test(iBehaviour))
             {
                 true_tests++;
             }
@@ -36,7 +36,7 @@ public class Transition
         }
         if (true_tests != 0 && true_tests == _conditions.Count)
         {
-            enemy.SetState(_targetState);
+            iBehaviour.SetState(_targetState);
         }
     }
 }

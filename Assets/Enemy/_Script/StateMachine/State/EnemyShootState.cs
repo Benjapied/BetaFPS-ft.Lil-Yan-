@@ -2,21 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShootState : EnemyState
+public class EnemyShootState : GeneralState
 {
-    public override void EnterState(Enemy enemy)
+    public override void EnterState(IBehaviour iBehaviour)
     {
-        Debug.Log("on entre dans le shoot");
-        
+        if (iBehaviour is Enemy enemy)
+        {
+            enemy.EnemyAnimator.SetBool("IsShooting", true);
+        }
     }
-    public override void FrameUpdate(Enemy enemy)
+    public override void FrameUpdate(IBehaviour iBehaviour)
     {
-        Debug.Log("on update dans le shoot");
+        if (iBehaviour is Enemy enemy)
+        {
+            enemy.RotateEnemy();
+        }
+            
     }
 
-    public override void ExitState(Enemy enemy)
+    public override void ExitState(IBehaviour iBehaviour)
     {
-        Debug.Log("on exit dans le shoot");
+        if (iBehaviour is Enemy enemy)
+        {
+            enemy.EnemyAnimator.SetBool("IsShooting", false);
+        }
     }
-    
 }

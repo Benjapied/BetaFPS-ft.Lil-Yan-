@@ -8,13 +8,13 @@ using UnityEngine.AI;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] Transform m_transform;
-    BehaviourEnemy _behaviour;
+    BehaviourGeneral _behaviour;
     public GameObject prefabEnemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        _behaviour = new BehaviourEnemy();
+        _behaviour = new BehaviourGeneral();
 
         
         _behaviour.AddState(Context.State.Idle, new EnemyIdleState());
@@ -40,28 +40,17 @@ public class EnemyManager : MonoBehaviour
         _behaviour.AddTransition(Context.State.Move, moveToShoot);
 
 
-        // Transition Shoot To Shoot
-        Transition shootToShoot = new Transition();
-        shootToShoot.TargetState = Context.State.Shoot;
-        shootToShoot.AddCondition(new Condition());
+        // Transition Shoot To Move
+        Transition shootToMove = new Transition();
+        shootToMove.TargetState = Context.State.Move;
+        shootToMove.AddCondition(new CheckMoveDistance());
 
-        _behaviour.AddTransition(Context.State.Shoot, shootToShoot);
+        _behaviour.AddTransition(Context.State.Shoot, shootToMove);
 
 
         //Instantiate(prefabEnemy, transform.position, transform.rotation);
 
         NavMeshAgent agent =  prefabEnemy.GetComponent<NavMeshAgent>();
-
-        //if (NavMesh.SamplePosition(prefabEnemy.transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
-        //{
-        //    transform.position = hit.position;
-        //    agent.Warp(hit.position); // Place l'agent sur le NavMesh
-        //    Debug.Log(hit.position);
-            
-        //}
-
-        //this.gameObject.AddComponent<Enemy>();
-
 
         prefabEnemy.GetComponent<Enemy>()._transform = m_transform;
         prefabEnemy.GetComponent<Enemy>().State = Context.State.Idle;
@@ -74,6 +63,6 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        prefabEnemy.GetComponent<Enemy>().UpdateEnemy();
+        prefabEnemy.GetComponent<Enemy>().UpdateObject();
     }
 }

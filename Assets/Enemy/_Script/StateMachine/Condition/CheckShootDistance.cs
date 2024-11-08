@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class CheckShootDistance : Condition
 {
-    public override bool Test(Enemy enemy)
+    public override bool Test(IBehaviour iBehaviour)
     {
-        float dist = Vector3.Distance(enemy.transform.position, enemy._transform.position);
-        if(dist < enemy.DistanceShoot)
+        //iBehaviour.
+
+        if (iBehaviour is Enemy enemy)
         {
-            Debug.Log("on test");
-            return true;
+            float dist = Vector3.Distance(enemy.transform.position, enemy._transform.position);
+            if (dist < enemy.DistanceShoot)
+            {
+                Debug.Log("on test");
+                return true;
+            }
         }
         return false;
     }
@@ -18,14 +23,18 @@ public class CheckShootDistance : Condition
 
 public class CheckMoveDistance : Condition
 {
-    public override bool Test(Enemy enemy)
+    public override bool Test(IBehaviour iBehaviour)
     {
-        float dist = Vector3.Distance(enemy.transform.position, enemy._transform.position);
-        if (dist > enemy.DistanceShoot)
+        if (iBehaviour is Enemy enemy)
         {
-            Debug.Log("on test");
-            return true;
+            float dist = Vector3.Distance(enemy.transform.position, enemy._transform.position);
+            if (dist > enemy.DistanceShoot)
+            {
+                Debug.Log("on test");
+                return true;
+            }
         }
+            
         return false;
     }
 }

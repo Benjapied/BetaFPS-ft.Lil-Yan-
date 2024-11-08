@@ -1,23 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CheckPlayerNearby : Condition
 {
-    public override bool Test(Enemy enemy)
+    public override bool Test(IBehaviour iBehaviour)
     {
-       
-        Collider[] hitColliders = Physics.OverlapSphere(enemy.gameObject.transform.position, enemy.DistanceDetection);
-
-        foreach (Collider collider in hitColliders)
+        if (iBehaviour is Enemy enemy)
         {
-            if (collider.gameObject != enemy.gameObject)
+            Vector3 directionToPlayer = (enemy._transform.position - enemy.gameObject.transform.position).normalized;
+            
+            float angleToPlayer = Vector3.Angle(enemy.gameObject.transform.forward, directionToPlayer);
+            if (angleToPlayer < enemy.visionAngle / 2)
             {
-                if(collider.gameObject.tag == "Player")
+                
+                float distanceToPlayer = Vector3.Distance(enemy.gameObject.transform.position, enemy._transform.position);
+                if (distanceToPlayer < enemy.DistanceDetection)
                 {
                     return true;
+                    // Faire un raycast pour vérifier si le joueur est caché par un obstacle
+                    //if (!Physics.Raycast(enemy.gameObject.transform.position, directionToPlayer, distanceToPlayer, obstacleLayer))
+                    //{
+                    //    // Le joueur est dans le cône de vision et n'est pas caché par un obstacle
+                    //    return true;
+                    //}
                 }
-            }
+            }   
         }
         return false;
     }
