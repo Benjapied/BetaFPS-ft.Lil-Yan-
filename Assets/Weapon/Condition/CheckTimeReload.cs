@@ -8,7 +8,7 @@ public class CheckTimeReload : Condition
     {
         if (iBehaviour is Weapon weapon)
         {
-            if (weapon.TimeInReload >= weapon.TimeReloading)
+            if (weapon.TimeInReload >= weapon.WeaponData._timeReloading)
             {
                 return true;
             }

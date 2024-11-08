@@ -8,11 +8,6 @@ public class EnemyIdleState : GeneralState
 {
     public override void EnterState(IBehaviour iBehaviour)
     {
-
-        
-
-
-        
     }
     public override void FrameUpdate(IBehaviour iBehaviour)
     {

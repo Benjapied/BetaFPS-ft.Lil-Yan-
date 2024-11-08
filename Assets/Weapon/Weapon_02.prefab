@@ -90,3 +90,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec615e6de2711344a9287b9fb21cb7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nbBalls: 5
+  _timeReloading: 2
+  _weaponData: {fileID: 11400000, guid: fcd33a50ad517a14296639d0456f9706, type: 2}

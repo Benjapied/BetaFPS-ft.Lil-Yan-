@@ -22,7 +22,7 @@ public class WeaponReloadingState : GeneralState
         if (iBehaviour is Weapon weapon)
         {
             weapon.TimeInReload = 0f;
-            weapon.NbBalls = weapon.MaxNbBalls;
+            weapon.NbBalls = weapon.WeaponData._nbBalls;
         }
     }
 }

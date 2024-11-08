@@ -6,14 +6,19 @@ public class WeaponShootState : GeneralState
 {
     public override void EnterState(IBehaviour iBehaviour)
     {
-        Debug.Log("on comence on a shooter");
+        if (iBehaviour is Weapon weapon)
+        {
+            weapon.NbBalls = weapon.WeaponData._nbBalls;
+        }
+            Debug.Log("on comence on a shooter");
+        
     }
     public override void FrameUpdate(IBehaviour iBehaviour)
     {
         if(iBehaviour is Weapon weapon)
         {
             weapon.NbBalls--;
-            //Debug.Log("on shoot");
+            //Debug.Log(weapon.NbBalls);
         }
     }
 

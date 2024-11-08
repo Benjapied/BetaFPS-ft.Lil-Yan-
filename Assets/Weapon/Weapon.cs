@@ -5,20 +5,23 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour, IBehaviour
 {
-    [SerializeField] int _nbBalls = 5;
-    private int _maxNbBalls = 5;
-    [SerializeField] float _timeReloading = 2f;
+    private int _nbBalls;
     private float _timeInReload = 0f;
     Context.State _state;
     BehaviourGeneral _behaviour;
+    [SerializeField] WeaponData _weaponData;
 
     public int NbBalls { get => _nbBalls; set => _nbBalls = value; }
-    public int MaxNbBalls { get => _maxNbBalls; set => _maxNbBalls = value; }
-    public float TimeReloading { get => _timeReloading; set => _timeReloading = value; }
-
     public BehaviourGeneral Behaviour { get => _behaviour; set => _behaviour = value; }
     internal Context.State State { get => _state; set => _state = value; }
     public float TimeInReload { get => _timeInReload; set => _timeInReload = value; }
+    public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
+
+
+    private void Start()
+    {
+        //_nbBalls = _weaponData._nbBalls;
+    }
 
     public void SetState(Context.State new_state)
     {

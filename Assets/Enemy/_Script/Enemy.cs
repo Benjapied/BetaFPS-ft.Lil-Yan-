@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour , IBehaviour
 {
     [SerializeField] Animator _enemyAnimator;
+    public LayerMask maskObstacle;
     Context.State _state;
     BehaviourGeneral _behaviour;
     public Transform _transform;
