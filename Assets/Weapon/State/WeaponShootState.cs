@@ -9,6 +9,7 @@ public class WeaponShootState : GeneralState
         if (iBehaviour is Weapon weapon)
         {
             weapon.NbBalls = weapon.WeaponData._nbBalls;
+            weapon.GetComponent<AudioSource>().PlayOneShot(weapon.WeaponData._soundShoot);
         }
             Debug.Log("on comence on a shooter");
         

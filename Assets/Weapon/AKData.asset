@@ -18,3 +18,5 @@ MonoBehaviour:
   _timeReloading: 2
   _timeBetweenShoot: 0.5
   _nbBalls: 5
+  _soundReload: {fileID: 8300000, guid: 9908ecc2c54a7c849ad59ef70a67f4ba, type: 3}
+  _soundShoot: {fileID: 8300000, guid: f616da8ff08dbcf46ac9244ddf65ef8e, type: 3}

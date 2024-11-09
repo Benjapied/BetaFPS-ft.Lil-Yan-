@@ -11,4 +11,6 @@ public class WeaponData : ScriptableObject
     public float _timeReloading;
     public float _timeBetweenShoot;
     public int _nbBalls;
+    public AudioClip _soundReload;
+    public AudioClip _soundShoot;
 }

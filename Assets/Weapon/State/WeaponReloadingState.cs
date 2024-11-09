@@ -8,7 +8,7 @@ public class WeaponReloadingState : GeneralState
     {
         if (iBehaviour is Weapon weapon)
         {
-            weapon.gameObject.GetComponent<AudioSource>().Play();
+            weapon.gameObject.GetComponent<AudioSource>().PlayOneShot(weapon.WeaponData._soundReload);
             //Debug.Log("on recharche");
         }
         Debug.Log("on comence a recharger");
