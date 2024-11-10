@@ -4,22 +4,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
 
-public class EnemyIdleState : EnemyState
+public class EnemyIdleState : GeneralState
 {
-    public override void EnterState(Enemy enemy)
+    public override void EnterState(IBehaviour iBehaviour)
     {
-
-        
-
-
-        
     }
-    public override void FrameUpdate(Enemy enemy)
+    public override void FrameUpdate(IBehaviour iBehaviour)
     {
         
     }
 
-    public override void ExitState(Enemy enemy)
+    public override void ExitState(IBehaviour iBehaviour)
     {
 
     }

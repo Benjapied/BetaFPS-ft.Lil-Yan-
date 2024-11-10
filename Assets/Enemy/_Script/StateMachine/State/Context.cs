@@ -9,6 +9,8 @@ namespace Context
         // Ajoutez vos états ici
         Idle,
         Move,
-        Shoot
+        Shoot,
+        ShootWeapon,
+        ReloadingWeapon,
     };
 };
