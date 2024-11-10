@@ -13,26 +13,22 @@ public class MovingState : PlayerMovementState
 
         Controller.GetInstance().OnMoveReleased += GoToIdle;
         Controller.GetInstance().OnRun += GoToRun;
-
+        Controller.GetInstance().OnSneak += GoToSneak;
+        Controller.GetInstance().onJump += GoToJump;
     }
     override public void ExitState() {
 
         Controller.GetInstance().OnMoveReleased -= GoToIdle;
         Controller.GetInstance().OnRun -= GoToRun;
+        Controller.GetInstance().OnSneak -= GoToSneak;
+        Controller.GetInstance().onJump -= GoToJump;
 
     }
     override public void Update() {
 
-        Vector2 movement = Controller.GetInstance().GetMove() * _player.Speed * Time.deltaTime * 100;
-
-        Vector3 newVelocity = _player.gameObject.transform.forward * movement.y + _player.gameObject.transform.right * movement.x;
-        newVelocity += Vector3.up * _player.GetComponent<Rigidbody>().velocity.y;
-
-        _player.GetComponent<Rigidbody>().velocity = newVelocity;
+        UpdateMovement();
 
     }
     override public void OnChangeState() { }
-
-    
 
 }

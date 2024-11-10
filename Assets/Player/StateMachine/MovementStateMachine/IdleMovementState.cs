@@ -15,9 +15,16 @@ public class IdleMovementState : PlayerMovementState
         _player.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         Controller.GetInstance().OnMove += GoToMove;
         Controller.GetInstance().onJump += GoToJump;
+        Controller.GetInstance().OnSneak += GoToSneak;  
 
     }
-    override public void ExitState() { }
+    override public void ExitState() {
+
+        Controller.GetInstance().OnMove -= GoToMove;
+        Controller.GetInstance().onJump -= GoToJump;
+        Controller.GetInstance().OnSneak -= GoToSneak;
+
+    }
     override public void Update() { }
     override public void OnChangeState() { }
 

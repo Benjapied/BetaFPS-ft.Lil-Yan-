@@ -12,27 +12,39 @@ public class RunState : PlayerMovementState
 
     override public void EnterState() {
 
-        Controller.GetInstance().OnMoveReleased += GoToIdle;
-        Controller.GetInstance().OnRunReleased += GoToMove;
+        Controller.GetInstance().OnRunReleased += ChangeState;
+        Controller.GetInstance().onJump += GoToJump;
 
-        _player.Speed = _player.Speed * 1.5f;
+        _player.CurrentSpeed = _player.SprintSpeed;
 
     }
     override public void ExitState() {
 
-        Controller.GetInstance().OnMoveReleased -= GoToIdle;
-        Controller.GetInstance().OnRunReleased -= GoToMove;
+        Controller.GetInstance().OnRunReleased -= ChangeState;
+        Controller.GetInstance().onJump -= GoToJump;
 
-        _player.ResetSpeed();
+        _player.CurrentSpeed = _player.DefaultSpeed;
 
     }
     override public void Update() {
 
-        Vector2 movement = Controller.GetInstance().GetMove() * _player.Speed * Time.deltaTime * 100;
-
-        _player.GetComponent<Rigidbody>().velocity = _player.gameObject.transform.forward * movement.y + _player.gameObject.transform.right * movement.x;
+        UpdateMovement();
 
     }
     override public void OnChangeState() { }
+
+    public void ChangeState()
+    {
+        Dictionary<string, bool> map = Controller.GetInstance().HoldDownMap;
+
+        if (map["move"])
+        {
+            GoToMove();
+            return;
+        }
+
+        GoToIdle();
+        return;
+    }
 
 }

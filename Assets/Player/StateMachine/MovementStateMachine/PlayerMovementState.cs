@@ -29,7 +29,7 @@ public class PlayerMovementState : BaseState
 
     public void GoToJump()
     {
-        if (_player.IsGrounded)
+        if (!_player.IsGrounded)
         {
             return;
         }
@@ -45,6 +45,16 @@ public class PlayerMovementState : BaseState
     public void GoToRun()
     {
         _stateMachine.ChangeState(_stateMachine.RunState);
+    }
+
+    public void UpdateMovement()
+    {
+        Vector2 movement = Controller.GetInstance().GetMove() * _player.CurrentSpeed * Time.deltaTime * 100;
+
+        Vector3 newVelocity = _player.gameObject.transform.forward * movement.y + _player.gameObject.transform.right * movement.x;
+        newVelocity += Vector3.up * _player.GetComponent<Rigidbody>().velocity.y;
+
+        _player.GetComponent<Rigidbody>().velocity = newVelocity;
     }
 
 }

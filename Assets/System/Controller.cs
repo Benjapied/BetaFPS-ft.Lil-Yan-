@@ -38,11 +38,20 @@ public class Controller : Singleton<Controller>
     public event Jump onJump;   
 
     private InputSystem _inputSystem;
+    private Dictionary<string, bool> _holdDownMap;
+    public Dictionary<string, bool> HoldDownMap { get => _holdDownMap; }
 
     protected override void Awake()
     {
         base.Awake();
-        _inputSystem = new InputSystem();
+        _inputSystem = new();
+        _holdDownMap = new();
+
+        _holdDownMap["move"] = false;
+        _holdDownMap["sneak"] = false;
+        _holdDownMap["run"] = false;
+        _holdDownMap["shoot"] = false;
+
     }
 
     void Start()
@@ -55,6 +64,7 @@ public class Controller : Singleton<Controller>
         _inputSystem.Enable();
         _inputSystem.Player.Move.started += ctx => MoveEvent();
         _inputSystem.Player.Move.canceled += ctx => MoveReleasedEvent();
+
         _inputSystem.Player.Shoot.started += ctx => ShootEvent();
         _inputSystem.Player.Shoot.canceled += ctx => ShootReleasedEvent();
         _inputSystem.Player.Sneak.started += ctx => SneakEvent();
@@ -73,6 +83,8 @@ public class Controller : Singleton<Controller>
     {
         _inputSystem.Disable();
         _inputSystem.Player.Move.started -= ctx => MoveEvent();
+        _inputSystem.Player.Move.canceled -= ctx => MoveReleasedEvent();
+
         _inputSystem.Player.Shoot.started -= ctx => ShootEvent();
         _inputSystem.Player.Sneak.started -= ctx => SneakEvent();
         _inputSystem.Player.Run.started -= ctx => RunEvent();
@@ -101,34 +113,42 @@ public class Controller : Singleton<Controller>
 
     public void MoveEvent()
     {
+        _holdDownMap["move"] = true;
         OnMove?.Invoke();
     }
     public void MoveReleasedEvent()
     {
+        _holdDownMap["move"] = false;
         OnMoveReleased?.Invoke();
     }
     public void ShootEvent()
     {
+        _holdDownMap["shoot"] = true;
         OnShoot?.Invoke();
     }
     public void ShootReleasedEvent() 
     { 
+        _holdDownMap["shoot"] = false;
         OnShootReleased?.Invoke();   
     }
     public void SneakEvent()
     {
+        _holdDownMap["sneak"] = true;
         OnSneak?.Invoke();
     }
     public void SneakReleasedEvent()
     {
+        _holdDownMap["sneak"] = false;
         OnSneakReleased?.Invoke();
     }
     public void RunEvent()
     {
+        _holdDownMap["run"] = true;
         OnRun?.Invoke();
     }
     public void RunReleasedEvent()
     {
+        _holdDownMap["run"] = false;
         OnRunReleased?.Invoke();
     }
     public void ReloadEvent()

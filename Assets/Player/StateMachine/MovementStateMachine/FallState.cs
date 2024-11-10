@@ -11,22 +11,43 @@ public class FallState : PlayerMovementState
 
     override public void EnterState() {
 
-        //Player p = ((PlayerStateMachine)_stateMachine).Player;
-
-        //p.gameObject.GetComponent<Rigidbody>().velocity = (p.gameObject.GetComponent<Rigidbody>().velocity + Vector3.up * -1) * 1.05f;
-
+        
     }
     override public void ExitState() { }
     override public void Update() {
 
-        if (_player.IsGrounded) { 
-            
-            GoToIdle();
+        if (Controller.GetInstance().HoldDownMap["run"]) { _player.CurrentSpeed = _player.SprintSpeed; }
+        else { _player.CurrentSpeed = _player.DefaultSpeed; }
+
+        _player.gameObject.GetComponent<Rigidbody>().velocity += Vector3.up * Time.deltaTime * Physics.gravity.y * _player.FallMultiplier;
+
+        if (_player.IsGrounded) {
+
+            ChangeState();
 
         }
+
     }
     override public void OnChangeState() { }
 
-    
+    public void ChangeState()
+    {
+        Dictionary<string, bool> map = Controller.GetInstance().HoldDownMap;
+
+        if (map["run"])
+        {
+            GoToRun();
+            return;
+        }
+
+        if (map["move"])
+        {
+            GoToMove();
+            return;
+        }
+        
+        GoToIdle();
+        return;
+    }
 
 }
