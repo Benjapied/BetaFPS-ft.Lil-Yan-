@@ -2,32 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMoveState : EnemyState
+public class EnemyMoveState : GeneralState
 {
     
 
-    public override void EnterState(Enemy enemy)
+    public override void EnterState(IBehaviour iBehaviour)
     {
-        
-        UnityEngine.AI.NavMeshAgent agent = enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        if (agent.isOnNavMesh)
+        if (iBehaviour is Enemy enemy)
         {
-            agent.SetDestination(enemy._transform.position);
+            enemy.EnemyAnimator.SetBool("IsMoving", true);
+            UnityEngine.AI.NavMeshAgent agent = enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent.isOnNavMesh)
+            {
+                agent.SetDestination(enemy._transform.position);
+            }
         }
-       
     }
-    public override void FrameUpdate(Enemy enemy)
+    public override void FrameUpdate(IBehaviour iBehaviour)
     {
-        UnityEngine.AI.NavMeshAgent agent = enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        if (agent.isOnNavMesh)
+        if (iBehaviour is Enemy enemy)
         {
-            agent.SetDestination(enemy._transform.position);
+            //l'ennemi se tourne vers le joueur
+            enemy.RotateEnemy();
+
+
+            //déplacement vers le joueur
+            UnityEngine.AI.NavMeshAgent agent = enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent.isOnNavMesh)
+            {
+                agent.SetDestination(enemy._transform.position);
+            }
         }
-        
     }
 
-    public override void ExitState(Enemy enemy)
+    public override void ExitState(IBehaviour iBehaviour)
     {
+        if (iBehaviour is Enemy enemy)
+        {
+            enemy.EnemyAnimator.SetBool("IsMoving", false);
+            UnityEngine.AI.NavMeshAgent agent = enemy.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent.isOnNavMesh)
+            {
+                agent.SetDestination(enemy.transform.position);
+            }
 
+            enemy.RotateEnemy();
+        }
+            
+        
     }
 }

@@ -6,7 +6,7 @@ public class Condition
 {
     
 
-    public virtual bool Test(Enemy enemy)
+    public virtual bool Test(IBehaviour iBehaviour)
     {
         return false;
     }
