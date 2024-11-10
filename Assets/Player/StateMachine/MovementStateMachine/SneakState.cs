@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SneakState : BaseState
+public class SneakState : PlayerMovementState
 {
-    public SneakState(StateMachine fsm) : base(fsm)
+    public SneakState(PlayerMovementStateMachine fsm) : base(fsm)
     {
 
     }

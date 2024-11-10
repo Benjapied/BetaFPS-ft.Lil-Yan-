@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionStateMachine : PlayerStateMachine
+public class PlayerActionStateMachine : StateMachine
 {
+    protected Player _player;
+    protected PlayerMovementState _currentState;
+
     private IdleActionState _idleState;
     private HasWeaponState  _hasWeaponState;
     private GetWeaponState  _getWeaponState;
@@ -17,8 +20,9 @@ public class ActionStateMachine : PlayerStateMachine
     public ReloadState ReloadState { get => _reloadState; set => _reloadState = value; }
     public ShootState ShootState { get => _shootState; set => _shootState = value; }
     public ThrowState ThrowState { get => _throwState; set => _throwState = value; }
+    public Player Player { get => _player; set => _player = value; }
     
-    public ActionStateMachine(Player p) : base(p)
+    public PlayerActionStateMachine(Player p)
     {
         _idleState = new(this);
         _hasWeaponState = new(this);

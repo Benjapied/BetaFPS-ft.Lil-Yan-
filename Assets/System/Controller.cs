@@ -34,9 +34,12 @@ public class Controller : Singleton<Controller>
     public delegate void MouseY();
     public event MouseY onMouseY;
 
+    public delegate void Jump();
+    public event Jump onJump;   
+
     private InputSystem _inputSystem;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _inputSystem = new InputSystem();
@@ -60,6 +63,7 @@ public class Controller : Singleton<Controller>
         _inputSystem.Player.Run.canceled += ctx => RunReleasedEvent();
         _inputSystem.Player.Throw.started += ctx => ThrowEvent();
         _inputSystem.Player.Reload.started += ctx => ReloadEvent();
+        _inputSystem.Player.Jump.started += ctx => JumpEvent(); 
 
         _inputSystem.Player.MouseX.started += ctx => MouseXEvent();
         _inputSystem.Player.MouseY.started += ctx => MouseYEvent();
@@ -74,6 +78,7 @@ public class Controller : Singleton<Controller>
         _inputSystem.Player.Run.started -= ctx => RunEvent();
         _inputSystem.Player.Throw.started -= ctx => ThrowEvent();
         _inputSystem.Player.Reload.started -= ctx => ReloadEvent();
+        _inputSystem.Player.Jump.started -= ctx => JumpEvent(); 
 
         _inputSystem.Player.MouseX.started -= ctx => MouseXEvent();
         _inputSystem.Player.MouseY.started -= ctx => MouseYEvent();
@@ -142,6 +147,9 @@ public class Controller : Singleton<Controller>
     {
         onMouseY?.Invoke();
     }
-
+    public void JumpEvent()
+    {
+        onJump?.Invoke();
+    }
 
 }

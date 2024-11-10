@@ -5,15 +5,27 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    MovementStateMachine _movingStateMachine;
-    ActionStateMachine _actionStateMachine;
+    [SerializeField] private float _speed = 10;
+                     private float _defaultSpeed;
+    [SerializeField] private float _heightJump = 5;
+    [SerializeField] private bool _isGrounded;
+
+    PlayerMovementStateMachine _movingStateMachine;
+    PlayerActionStateMachine _actionStateMachine;
+
+    public float Speed { get => _speed; set => _speed = value; }
+    public float HeightJump { get => _heightJump; set => _heightJump = value; }
+    public bool IsGrounded { get => _isGrounded; set => _isGrounded = value; }
 
     private void Awake()
     {
-        _movingStateMachine = new MovementStateMachine(this);
+        _defaultSpeed = _speed;
+        _isGrounded = false;
+
+        _movingStateMachine = new PlayerMovementStateMachine(this);
         _movingStateMachine.InitState(_movingStateMachine.IdleState);
 
-        _actionStateMachine = new ActionStateMachine(this);
+        _actionStateMachine = new PlayerActionStateMachine(this);
         _actionStateMachine.InitState(_actionStateMachine.IdleState);
     }
 
@@ -26,4 +38,7 @@ public class Player : MonoBehaviour
         _actionStateMachine.Update();  
 
     }
+
+    public void ResetSpeed() {  _speed = _defaultSpeed; }
+
 }

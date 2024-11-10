@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingState : BaseState
+public class MovingState : PlayerMovementState
 {
-    public MovingState(StateMachine fsm) : base(fsm)
+    public MovingState(PlayerMovementStateMachine fsm) : base(fsm)
     {
 
     }
@@ -12,31 +12,27 @@ public class MovingState : BaseState
     override public void EnterState() {
 
         Controller.GetInstance().OnMoveReleased += GoToIdle;
+        Controller.GetInstance().OnRun += GoToRun;
 
     }
-    override public void ExitState() { }
+    override public void ExitState() {
+
+        Controller.GetInstance().OnMoveReleased -= GoToIdle;
+        Controller.GetInstance().OnRun -= GoToRun;
+
+    }
     override public void Update() {
 
-        Player p = ((PlayerStateMachine)_stateMachine).Player;
+        Vector2 movement = Controller.GetInstance().GetMove() * _player.Speed * Time.deltaTime * 100;
 
-        Vector2 movement = Controller.GetInstance().GetMove() * 10 * Time.deltaTime * 10;
+        Vector3 newVelocity = _player.gameObject.transform.forward * movement.y + _player.gameObject.transform.right * movement.x;
+        newVelocity += Vector3.up * _player.GetComponent<Rigidbody>().velocity.y;
 
-        p.GetComponent<Rigidbody>().velocity = new Vector3(movement.x,0,movement.y);
+        _player.GetComponent<Rigidbody>().velocity = newVelocity;
 
     }
     override public void OnChangeState() { }
 
-    public void GoToIdle()
-    {
-        _stateMachine.ChangeState(((MovementStateMachine)_stateMachine).IdleState);
-    }
-    public void GoToJump()
-    {
-
-    }
-    public void GoToSneak()
-    {
-
-    }
+    
 
 }

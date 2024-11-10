@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using UnityEngine;
 
-public class IdleMovementState : BaseState
+public class IdleMovementState : PlayerMovementState
 {
 
-    public IdleMovementState(StateMachine fsm) : base (fsm) { 
+    public IdleMovementState(PlayerMovementStateMachine fsm) : base (fsm) { 
         
     }
 
     override public void EnterState() {
 
-        Controller.GetInstance().OnMove += ChangeStateMove;
+        _player.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        Controller.GetInstance().OnMove += GoToMove;
+        Controller.GetInstance().onJump += GoToJump;
 
     }
     override public void ExitState() { }
     override public void Update() { }
     override public void OnChangeState() { }
 
-    public void ChangeStateMove()
-    {
-        _stateMachine.ChangeState(((MovementStateMachine)_stateMachine).MovingState);
-    }
 
 }
